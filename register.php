@@ -20,8 +20,12 @@
 				/*'unique'   => 'users'*/
 			),
 			'password'        => array(
-				'required' => true,
-				'min'      => 8
+				'required' 	  => true,
+				'min'      	  => 8,
+				'letter_upp'  => 1,
+				'letter_low'  => 1,
+				'number'      => 1,
+				'symbol'      => 1
 			),
 			'password_again'  => array(
 				'required' => true,

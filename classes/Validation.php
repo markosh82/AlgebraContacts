@@ -44,6 +44,26 @@ class Validation
 								$this->addError($item, "{$item} already exists.");
 							}
 						break;
+						case 'letter_upp':
+							if(preg_match('/[A-Z]/', $value) < $rule_value) {
+								$this->addError($item, "Field {$item} must contain a minimum of {$rule_value} uppercase letter.");
+							}
+						break;
+						case 'letter_low':
+							if(preg_match('/[a-z]/', $value) < $rule_value) {
+								$this->addError($item, "Field {$item} must contain a minimum of {$rule_value} lowercase letter.");
+							}
+						break;
+						case 'number':
+							if(preg_match('/[0-9]/', $value) < $rule_value) {
+								$this->addError($item, "Field {$item} must contain a minimum of {$rule_value} digit.");
+							}
+						break;
+						case 'symbol':
+							if(preg_match('/[^a-zA-Z0-9]/', $value) < $rule_value) {
+								$this->addError($item, "Field {$item} must contain a minimum of {$rule_value} symbol.");
+							}
+						break;
 					}
 				}
 			}
