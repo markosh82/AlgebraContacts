@@ -63,21 +63,27 @@ private function __construct()
 		return $this;
 	}
 	
-	private function action ($action, $table, $where = array()){
-		if (count($where )===3){
-			$operators = array('=', '<', '>', '<=', '>=');
-			
-			$field = $where[0];
-			$operator = $where[1];
-			$value = $where[2];
-			
-			if (in_array($operator, $operators)) {
-				$sql = "{$action} FROM {$table} WHERE {$field} {$operator} ?";
-				if(!$this->query($sql, array($value))->error()){
-					return $this;
+	private function action($action, $table, $where = array()){
+		
+		if (!empty($where)) {
+			$where_split = array_chunk($where, 4);
+			$fields_num = count($where_split);
+			$cond = "";
+			$x = 1;
+			foreach ($where_split as $condition) {
+				$values[] = $condition[2];
+				$cond .= $condition[0]." ".$condition[1]." ? ";
+				if ($x < $fields_num) {
+					$cond .= $condition[3]." ";
 				}
+				$x++;
 			}
-		} else {
+			//	echo '<h3>'. $cond .'</h3>';
+			$sql = "{$action} FROM {$table} WHERE {$cond}";
+			if (!$this->query($sql, $values)->error()) {
+				return $this;
+			}
+		} else{
 			$sql = "{$action} FROM {$table}";
 			if (!$this->query($sql)->error()) {
 				return $this;
