@@ -17,7 +17,7 @@
 				'required' => true,
 				'min'      => 2,
 				'max'      => 20,
-				/*'unique'   => 'users'*/
+				'unique'   => 'users'
 			),
 			'password'        => array(
 				'required' 	  => true,
@@ -32,7 +32,17 @@
 				'matches'  => 'password'
 			)
 		));
+		
+		if($validate->passed()) {
+			Session::flash('success', 'You registred successfully!');
+			header('Location: login.php');
+			exit();
+		}
 	}
+	
+	Helper::getHeader('Algebra Contacts');
+	
+	require_once 'notifications.php';
 ?>
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
@@ -49,7 +59,7 @@
 					</div>
 					<div class="form-group <?php echo ($validation->hasError('username')) ? 'has-error' : ''; ?>">
 						<label for="username" class="control-label">Username*</label>
-						<input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+						<input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autocomplete="off">
 						<?php echo ($validation->hasError('username')) ? '<p class="text-danger">'.$validation->hasError('username').'</p>' : '';?>
 					</div>
 					<div class="form-group <?php echo ($validation->hasError('password')) ? 'has-error' : ''; ?>">
