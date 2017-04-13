@@ -19,49 +19,52 @@ class Validation
 				$item = escape($item);
 				$value = trim($_POST[$item]);
 				
+				$new_item = str_replace('_', ' ', $item);
+					
+				
 				if($rule === 'required' && empty($value)) {
-					$this->addError($item, "Field {$item} is required.");
+					$this->addError($item, "Field {$new_item} is required.");
 				} else if (!empty($value)) {
 					switch($rule) {
 						case 'min':
 							if(strlen($value) < $rule_value) {
-								$this->addError($item, "Field {$item} must have a minimum of {$rule_value} characters.");
+								$this->addError($item, "Field {$new_item} must have a minimum of {$rule_value} characters.");
 							}
 						break;
 						case 'max':
 							if(strlen($value) > $rule_value) {
-								$this->addError($item, "Field {$item} must have a maximum of {$rule_value} characters.");
+								$this->addError($item, "Field {$new_item} must have a maximum of {$rule_value} characters.");
 							}
 						break;
 						case 'matches':
 							if($value != $_POST[$rule_value]) {
-								$this->addError($item, "Field {$item} must match field {$rule_value}.");
+								$this->addError($item, "Field {$new_item} must match field {$rule_value}.");
 							}						
 						break;
 						case 'unique':
 							$check = $this->_db->get('id', $rule_value, array($item,'=',$value));
 							if($check->count()) {
-								$this->addError($item, "{$item} already exists.");
+								$this->addError($item, "{$new_item} already exists.");
 							}
 						break;
 						case 'letter_upp':
 							if(preg_match('/[A-Z]/', $value) < $rule_value) {
-								$this->addError($item, "Field {$item} must contain a minimum of {$rule_value} uppercase letter.");
+								$this->addError($item, "Field {$new_item} must contain a minimum of {$rule_value} uppercase letter.");
 							}
 						break;
 						case 'letter_low':
 							if(preg_match('/[a-z]/', $value) < $rule_value) {
-								$this->addError($item, "Field {$item} must contain a minimum of {$rule_value} lowercase letter.");
+								$this->addError($item, "Field {$new_item} must contain a minimum of {$rule_value} lowercase letter.");
 							}
 						break;
 						case 'number':
 							if(preg_match('/[0-9]/', $value) < $rule_value) {
-								$this->addError($item, "Field {$item} must contain a minimum of {$rule_value} digit.");
+								$this->addError($item, "Field {$new_item} must contain a minimum of {$rule_value} digit.");
 							}
 						break;
 						case 'symbol':
 							if(preg_match('/[^a-zA-Z0-9]/', $value) < $rule_value) {
-								$this->addError($item, "Field {$item} must contain a minimum of {$rule_value} symbol.");
+								$this->addError($item, "Field {$new_item} must contain a minimum of {$rule_value} symbol.");
 							}
 						break;
 					}

@@ -1,12 +1,16 @@
 <?php
 	require_once 'core/init.php';
 	
-	Helper::getHeader('Algebra Contacts');
+	
 	
 	$validation = new Validation();
 	
 	
 	if(Input::exists()) {
+		
+		if(Token::getInstance()->check(Input::get('token'))) {
+			
+		
 		$validate = $validation->check(array(
 			'name'            => array(
 				'required' => true,
@@ -34,10 +38,13 @@
 		));
 		
 		if($validate->passed()) {
-			Session::flash('success', 'You registred successfully!');
-			header('Location: login.php');
-			exit();
+			$salt = Hash::salt(32);
+				$password = Hash::make(Input::get('password'), $salt);			
+				
+				Session::flash('success', 'You registred successfully!');
+				//Redirect::to('login');
 		}
+	}
 	}
 	
 	Helper::getHeader('Algebra Contacts');
@@ -52,6 +59,7 @@
 			</div>
 			<div class="panel-body">
 				<form method="post">
+				<input type="hidden" name="token" value="<?php echo Token::getInstance()->generate(); ?>">
 					<div class="form-group <?php echo ($validation->hasError('name')) ? 'has-error' : ''; ?>">
 						<label for="name" class="control-label">Name*</label>
 						<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" value="<?php echo escape(Input::get('name'))?>">
@@ -71,8 +79,11 @@
 						<label for="password_again" class="control-label">Confirm Password*</label>
 						<input type="password" class="form-control" id="password_again" name="password_again" placeholder="Enter your password again">
 						<?php echo ($validation->hasError('password_again')) ? '<p class="text-danger">'.$validation->hasError('password_again').'</p>' : '';?>
-					</div>
-					<div class="form-group">
+					</div
+					
+					
+				
+				        <div class="form-group">
 						<button type="submit" class="btn btn-primary">Create an account</button>
 					</div>
 				</form>
