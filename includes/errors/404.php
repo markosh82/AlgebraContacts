@@ -1,4 +1,1 @@
-<center>
-<h1>404</h1>
-<h2>Page not found!</h2>
-</center>
+<h1>Ops that page can't be found!!!</h1>

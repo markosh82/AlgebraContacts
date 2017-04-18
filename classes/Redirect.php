@@ -11,11 +11,7 @@ class Redirect
 						include 'includes/errors/404.php';
 						exit();
 					break;
-					case 403:
-						header('HTTP/1.0 403 Forbidden');
-						include 'includes/errors/403.php';
-						exit();
-					break;
+					
 				}
 			}
 			

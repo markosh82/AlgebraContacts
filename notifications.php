@@ -2,8 +2,8 @@
 
 require_once 'core/init.php';
 	
-	$sessions = Session::all();
-	foreach ($sessions as $key => $msg) {
+	$vars = Session::all();
+	foreach ($vars as $key => $value) {
 		switch($key) {
 			case 'success':
 			case 'danger':
@@ -14,7 +14,7 @@ require_once 'core/init.php';
 					<div class="col-md-12">
 						<div class="alert alert-<?php echo $key; ?> alert-dismissable">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-							<?php echo $msg; ?>
+							<?php echo $value; ?>
 						</div>
 					</div>
 				</div>

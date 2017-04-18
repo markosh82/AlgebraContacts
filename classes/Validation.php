@@ -23,7 +23,7 @@ class Validation
 					
 				
 				if($rule === 'required' && empty($value)) {
-					$this->addError($item, "Field {$new_item} is required.");
+					$this->addError($item, "Field  {$item} is required.");
 				} else if (!empty($value)) {
 					switch($rule) {
 						case 'min':
@@ -39,7 +39,8 @@ class Validation
 						case 'matches':
 							if($value != $_POST[$rule_value]) {
 								$this->addError($item, "Field {$new_item} must match field {$rule_value}.");
-							}						
+							}	
+							
 						break;
 						case 'unique':
 							$check = $this->_db->get('id', $rule_value, array($item,'=',$value));
@@ -79,6 +80,9 @@ class Validation
 		return $this;
 	}
 	
+	
+   
+		
 	private function addError($item, $error)
 	{
 		$this->_errors[$item] = $error;
