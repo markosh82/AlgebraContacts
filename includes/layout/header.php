@@ -7,7 +7,7 @@
         <title><?php echo $title; ?> </title>
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -48,8 +48,25 @@
                         <button class="btn btn-default">Submit</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Sign In</a></li>
-                        <li><a href="#">Sign Up</a></li>
+                        <?php
+								if(!$user->check()) {
+							?>
+							<!-- Kada korisnik nije logiran-->
+							<li><a href="login.php">Sign In</a></li>
+							<li><a href="register.php">Sign Up</a></li>
+							<?php
+								} else {
+							?>
+							<!-- Kada je korisnik logiran-->
+							<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php echo ucfirst($user->data()->name);?> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="logout.php">Logout</a></li>
+                            </ul>
+                        </li>
+						<?php
+								}
+						?>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

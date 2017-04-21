@@ -1,5 +1,6 @@
 <?php
     require_once 'core/init.php';
+	
     $user = new User();
     
     if($user->check()) {
@@ -12,10 +13,12 @@
                 'username' => array('required' => true),
                 'password' => array('required' => true)
             ));
+			
             if($validation->passed()) {
 				
-				$remember = (Input::get('remember') === 'on') ? true : false;
+				$remember = (bool)Input::get('remember');
                 $login = $user->login(Input::get('username'), Input::get('password'), $remember);
+				
                 if($login) {
                     Redirect::to('dashboard');
                 } else {
@@ -25,7 +28,8 @@
             }
         }
     }
-    Helper::getHeader('Algebra Contacts');
+    Helper::getHeader('Algebra Contacts', 'header', $user);
+	
     require_once 'notifications.php';
 ?>
 <div class="row">
@@ -51,9 +55,9 @@
                         <?php echo ($validate->hasError('password')) ? '<p class="text-danger">'.$validate->hasError('password').'</p>' : '' ?>
                     </div>
 					
-					<div class="field">
-						<label for="remember">
-							<input type="checkbox" name="remember" id="remember">Remember me
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="remember" value="true"> Remember me
 						</label>
 					</div>
 					

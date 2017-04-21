@@ -5,7 +5,7 @@ return [
 'remember' => [
 
 'cookie_name' 	=> 'hash',
-'cookie_expiry'	=> 604800
+'cookie_expire'	=> 604800
 ],
 
 'sessions' => [
